@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <title>Rock N Taco</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-color: #ffffff;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00d4ff;
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #00d4ff;
+      transition: width 0.3s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    /* Hamburger Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: 65px;
+        left: 0;
+        background-color: rgba(15, 23, 42, 0.95);
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        display: none;
+        padding: 1rem 0;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+    }
+
+    /* Cover Section */
+    .cover-section {
+      margin-top: 80px;
+      height: 60vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      overflow: hidden;
+    }
+
+    .cover-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    .cover-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(15, 23, 42, 0.4));
+      z-index: 2;
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: #fff;
+    }
+
+    .logo-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-top: 1rem;
+      border: 3px solid #fff;
+      object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+
+    .cover-title {
+      font-size: 3rem;
+    }
+
+    .highlight-n {
+      color: red;
+      font-size: 4rem;
+    }
+
+    .cover-subtitle {
+      font-size: 1.2rem;
+    }
+
+    .menu-options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 2rem;
+      padding: 3rem 2rem;
+      overflow-x: auto;
+    }
+
+    .menu-options::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .menu-options::-webkit-scrollbar-thumb {
+      background-color: #0f172a;
+      border-radius: 3px;
+    }
+
+
+    .menu-card {
+      width: 250px;
+      height: 250px;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.4s ease;
+      border: 2px solid #0f172a;
+    }
+
+    .menu-card:hover {
+      transform: scale(1.05) rotateZ(1deg);
+    }
+
+    .menu-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .menu-card h3 {
+      color: #0f172a;
+    }
+
+    /* QR Button */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .button-container button {
+      position: relative;
+      background-color: #0f172a;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .button-container button::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      transition: width 0.4s ease, height 0.4s ease;
+      z-index: 0;
+    }
+
+    .button-container button:hover::after {
+      width: 300%;
+      height: 300%;
+    }
+
+    .button-container button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    #qr-code-container {
+      display: none;
+      text-align: center;
+      margin-top: 1rem;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    #qr-code-container img {
+      width: 200px;
+      height: auto;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Social Media */
+    .social-media-section {
+      background: #0f172a;
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .social-icons {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .social-icons li a {
+      color: #00d4ff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons li a:hover {
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+  .menu-card {
+    width: 200px;
+    height: 220px;
+  }
+}
+
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cover-title {
+        font-size: 2rem;
+      }
+
+      .highlight-n {
+        font-size: 2.5rem;
+      }
+
+      .cover-subtitle {
+        font-size: 1rem;
+      }
+
+      .menu-card {
+        width: 100%;
+        max-width: 300px;
+        border: 2px solid #0f172a;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">Rock N Taco</a>
+      <div class="menu-toggle" onclick="window.location.href='special.html'">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  
+
+  <!-- Cover Section -->
+  <section class="cover-section" id="home">
+    <img src="{{ url_for('static', filename='images/200w.webp') }}" class="cover-image" />
+    <div class="cover-overlay"></div>
+    <div class="cover-content fade-in">
+      <h1 class="cover-title">Welcome to Rock <span class="highlight-n">N</span> Taco</h1>
+      <p class="cover-subtitle">Rockin’ Tacos. Rollin’ Flavor</p>
+      <img src="{{ url_for('static', filename='images/pic_logo.jpeg') }}" class="logo-image" alt="Logo" />
+
+    </div>
+  </section>
+
+<!-- Menu Section -->
+<section class="menu-options fade-in">
+  <!-- Redirect to Flask route /special -->
+  <div class="menu-card" onclick="window.location.href='/special'">
+    <img src="{{ url_for('static', filename='images/menu.jpeg') }}" alt="Menu">
+    <h3>Menu</h3>
+  </div>
+
+  <div class="menu-card">
+    <img src="{{ url_for('static', filename='images/special.jpeg') }}" alt="Special">
+    <h3>Special Menu</h3>
+  </div>
+</section>
+
+
+
+
+  <!-- QR Section -->
+<section>
+  <div class="button-container">
+    <button onclick="toggleQRCode()"><span>Tap here and Scan QR- Code to share</span></button>
+  </div>
+  <div id="qr-code-container" style="display: none; justify-content: center; align-items: center; margin: 1rem auto 2rem;">
+  <div id="qrcode"></div>
+</div>
+
+</section>
+
+
+  <!-- Social Media Section -->
+  <section class="social-media-section" id="contact">
+    <h2>Contact Us</h2>
+    <p>Stay updated with our latest offerings and events!</p>
+    <ul class="social-icons">
+      <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+      <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+      <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+    </ul>
+  </section>
+
+  <!-- Scripts -->
+  <script>
+    let qrGenerated = false;
+
+  function toggleQRCode() {
+    const qrContainer = document.getElementById("qr-code-container");
+    const qrDiv = document.getElementById("qrcode");
+
+    if (qrContainer.style.display === "none") {
+      qrContainer.style.display = "flex";
+      qrContainer.style.justifyContent = "center";
+      qrContainer.style.alignItems = "center";
+
+      if (!qrGenerated) {
+        const currentUrl = window.location.href;
+        new QRCode(qrDiv, {
+          text: currentUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        qrGenerated = true;
+      }
+
+    } else {
+      qrContainer.style.display = "none";
+    }
+  }
+
+    function toggleMenu(button) {
+      button.classList.toggle("open");
+      document.getElementById("nav-menu").classList.toggle("active");
+    }
+
+    // Scroll reveal
+    const fadeElements = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

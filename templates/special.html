@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Special Menu - Rock N Taco</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      background-color: #f8f9fa;
+    }
+
+    .menu-button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .menu-button:hover {
+      background-color: #1e293b;
+    }
+
+    #menu-image {
+      display: none;
+      margin: 20px auto;
+      max-width: 600px;
+      width: 90%;
+      height: auto;
+      border: 2px solid #0f172a;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Special Menu</h1>
+  <p>Click the button below to view our menu:</p>
+
+  <!-- Button -->
+  <button class="menu-button" onclick="showMenu()">View Menu</button>
+
+  <!-- Menu Image (initially hidden) -->
+  <div>
+    <img id="menu-image" src="{{ url_for('static', filename='images/menu_popup.jpeg') }}" alt="Menu">
+  </div>
+
+  <!-- Script to toggle the image -->
+  <script>
+    function showMenu() {
+      const menuImg = document.getElementById('menu-image');
+      menuImg.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
