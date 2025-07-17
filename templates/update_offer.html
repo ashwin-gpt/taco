@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Offers - {{ shop }}</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f8fafc;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    input, label {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    input[type="file"],
+    input[type="time"] {
+      padding: 0.5rem;
+    }
+
+    button {
+      background: #0f172a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e293b;
+    }
+
+    a.back {
+      display: inline-block;
+      margin-top: 1.5rem;
+      color: #0f172a;
+      text-decoration: none;
+    }
+
+    a.back:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Upload a New Offer for {{ shop }}</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    <label for="offer_image">Offer Image:</label>
+    <input type="file" name="offer_image" required>
+
+    <label for="start_time">Start Time:</label>
+    <input type="time" name="start_time" required>
+
+    <label for="end_time">End Time:</label>
+    <input type="time" name="end_time" required>
+
+    <button type="submit">Upload Offer</button>
+  </form>
+
+  <a class="back" href="{{ url_for('dashboard', shop_name=shop) }}">← Back to Dashboard</a>
+</body>
+</html>

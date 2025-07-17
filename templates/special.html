@@ -10,6 +10,8 @@
       padding: 20px;
       text-align: center;
       background-color: #f8f9fa;
+      position: relative;
+      overflow: hidden;
     }
 
     .menu-button {
@@ -35,6 +37,28 @@
       border: 2px solid #0f172a;
       border-radius: 8px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+    }
+
+    .floating-food {
+      position: absolute;
+      font-size: 30px;
+      animation: floatFood 15s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    @keyframes floatFood {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0.2;
+      }
     }
   </style>
 </head>
@@ -46,17 +70,37 @@
   <!-- Button -->
   <button class="menu-button" onclick="showMenu()">View Menu</button>
 
-  <!-- Menu Image (initially hidden) -->
+  <!-- Menu Image -->
   <div>
     <img id="menu-image" src="{{ url_for('static', filename='images/menu_popup.jpeg') }}" alt="Menu">
   </div>
 
-  <!-- Script to toggle the image -->
+  <!-- Floating Food Emojis -->
+  <div id="floating-food-container"></div>
+
   <script>
     function showMenu() {
       const menuImg = document.getElementById('menu-image');
       menuImg.style.display = 'block';
     }
+
+    // Floating food generator
+    const foodEmojis = ['🍕', '🌮', '🍔', '🍟', '🥙', '🍣', '🌯', '🍩', '🍗', '🥪'];
+    const container = document.getElementById('floating-food-container');
+
+    function createFloatingFood() {
+      const emoji = document.createElement('div');
+      emoji.classList.add('floating-food');
+      emoji.innerText = foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = (10 + Math.random() * 10) + 's';
+      emoji.style.fontSize = (20 + Math.random() * 30) + 'px';
+      container.appendChild(emoji);
+
+      setTimeout(() => emoji.remove(), 20000);
+    }
+
+    setInterval(createFloatingFood, 500);
   </script>
 
 </body>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shop Login</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: #f1f5f9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating fruits as <img> elements */
+    .floating-fruit {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.5;
+      animation: float 12s ease-in-out infinite;
+    }
+
+    .fruit1 {
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+
+    .fruit2 {
+      top: 40%;
+      left: 90%;
+      animation-delay: 3s;
+    }
+
+    .fruit3 {
+      top: 75%;
+      left: 25%;
+      animation-delay: 6s;
+    }
+
+    .fruit4 {
+      top: 20%;
+      left: 50%;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-30px) rotate(180deg);
+      }
+      100% {
+        transform: translateY(0) rotate(360deg);
+      }
+    }
+
+    .login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      z-index: 10;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 0.5rem 0;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e293b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating fruit images -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg" class="floating-fruit fruit1" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg" class="floating-fruit fruit2" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg" class="floating-fruit fruit3" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/grapes.jpg" class="floating-fruit fruit4" />
+
+  <div class="login-box">
+    <h2>Shop Login</h2>
+    <form method="POST" action="{{ url_for('handle_login') }}">
+      <input type="text" name="shop_name" placeholder="Enter Shop Name" required />
+      <input type="password" name="password" placeholder="Enter Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+</body>
+</html>

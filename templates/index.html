@@ -4,385 +4,641 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <title>Rock N Taco</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <title>{{ links.display_name }}</title>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      background-color: #ffffff;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease-out;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Navbar */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      padding: 1rem 0;
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #00d4ff;
-      text-decoration: none;
-    }
-
-    .nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-
-    .nav-menu a {
-      color: white;
-      text-decoration: none;
-      position: relative;
-      font-weight: 500;
-    }
-
-    .nav-menu a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #00d4ff;
-      transition: width 0.3s ease;
-    }
-
-    .nav-menu a:hover::after {
-      width: 100%;
-    }
-
-    /* Hamburger Menu */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .menu-toggle span {
-      height: 3px;
-      width: 25px;
-      background: white;
-      margin: 4px 0;
-      transition: 0.4s;
-    }
-
-    .menu-toggle.open span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .menu-toggle.open span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
-
-      .nav-menu {
-        position: absolute;
-        top: 65px;
-        left: 0;
-        background-color: rgba(15, 23, 42, 0.95);
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        display: none;
-        padding: 1rem 0;
-      }
-
-      .nav-menu.active {
-        display: flex;
-      }
-    }
-
-    /* Cover Section */
-    .cover-section {
-      margin-top: 80px;
-      height: 60vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      overflow: hidden;
-    }
-
-    .cover-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.7;
-      z-index: 1;
-    }
-
-    .cover-overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(15, 23, 42, 0.4));
-      z-index: 2;
-    }
-
-    .cover-content {
-      position: relative;
-      z-index: 3;
-      text-align: center;
-      color: #fff;
-    }
-
-    .logo-image {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin-top: 1rem;
-      border: 3px solid #fff;
-      object-fit: cover;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  html {
+    scroll-behavior: smooth;
   }
 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    .cover-title {
-      font-size: 3rem;
-    }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: #ffffff;
+  }
 
-    .highlight-n {
-      color: red;
-      font-size: 4rem;
-    }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+  }
 
-    .cover-subtitle {
-      font-size: 1.2rem;
-    }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    .menu-options {
-      display: flex;
-      justify-content: center;
-      flex-wrap: nowrap;
-      gap: 2rem;
-      padding: 3rem 2rem;
-      overflow-x: auto;
-    }
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1rem 0;
+  }
 
-    .menu-options::-webkit-scrollbar {
-      height: 6px;
-    }
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
 
-    .menu-options::-webkit-scrollbar-thumb {
-      background-color: #0f172a;
-      border-radius: 3px;
-    }
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00d4ff;
+    text-decoration: none;
+  }
 
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+  }
 
-    .menu-card {
-      width: 250px;
-      height: 250px;
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      transition: transform 0.4s ease;
-      border: 2px solid #0f172a;
-    }
+  .nav-menu a {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    font-weight: 500;
+  }
 
-    .menu-card:hover {
-      transform: scale(1.05) rotateZ(1deg);
-    }
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00d4ff;
+    transition: width 0.3s ease;
+  }
 
-    .menu-card img {
-      width: 100px;
-      height: 100px;
-      border-radius: 0.5rem;
-      object-fit: cover;
-      margin-bottom: 1rem;
-    }
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
 
-    .menu-card h3 {
-      color: #0f172a;
-    }
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
 
-    /* QR Button */
-    .button-container {
-      display: flex;
-      justify-content: center;
-      margin: 2rem 0;
-    }
+  .menu-toggle span {
+    height: 3px;
+    width: 25px;
+    background: white;
+    margin: 4px 0;
+    transition: 0.4s;
+  }
 
-    .button-container button {
-      position: relative;
-      background-color: #0f172a;
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      overflow: hidden;
-      cursor: pointer;
-    }
+  .cover-section {
+    margin-top: 80px;
+    min-height: 60vh;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    overflow: hidden;
+    padding: 2rem 1rem;
+  }
 
-    .button-container button::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      transition: width 0.4s ease, height 0.4s ease;
-      z-index: 0;
-    }
+  .cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.7;
+    z-index: 1;
+  }
 
-    .button-container button:hover::after {
-      width: 300%;
-      height: 300%;
-    }
+  .cover-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(15, 23, 42, 0.4));
+    z-index: 2;
+  }
 
-    .button-container button span {
-      position: relative;
-      z-index: 1;
-    }
+  .cover-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #fff;
+    max-width: 800px;
+    width: 100%;
+  }
 
-    #qr-code-container {
-      display: none;
-      text-align: center;
-      margin-top: 1rem;
-      animation: fadeIn 0.5s ease-in-out;
-    }
+  .logo-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 0.5rem;
+  border: 2px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
-    #qr-code-container img {
-      width: 200px;
-      height: auto;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* Social Media */
-    .social-media-section {
-      background: #0f172a;
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .social-icons {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-
-    .social-icons li a {
-      color: #00d4ff;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.3s ease;
-    }
-
-    .social-icons li a:hover {
-      color: white;
-    }
-
-    @media (max-width: 480px) {
-  .menu-card {
-    width: 200px;
-    height: 220px;
+/* Responsive adjustment for small devices */
+@media (max-width: 600px) {
+  .logo-image {
+    width: 60px;
+    height: 60px;
+    margin-top: 0.3rem;
   }
 }
 
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .cover-title {
-        font-size: 2rem;
-      }
+  .cover-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+  }
 
-      .highlight-n {
-        font-size: 2.5rem;
-      }
+  .highlight-n {
+    color: red;
+    font-size: 4rem;
+  }
 
-      .cover-subtitle {
-        font-size: 1rem;
-      }
+  .cover-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
 
-      .menu-card {
-        width: 100%;
-        max-width: 300px;
-        border: 2px solid #0f172a;
-      }
+  .corner-menu-card {
+    position: absolute;
+    bottom: 20px;
+    width: 200px;
+    height: 200px;
+    z-index: 5;
+    background: white;
+    border: 2px solid #0f172a;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .corner-menu-card:hover {
+    transform: scale(1.05);
+  }
+
+  #left-menu {
+    left: 20px;
+  }
+
+  #right-menu {
+    right: 20px;
+  }
+
+  .menu-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  .menu-card h3 {
+    color: #0f172a;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+
+  .button-container button {
+    background-color: #0f172a;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .button-container button::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 0;
+  }
+
+  .button-container button:hover::after {
+    width: 300%;
+    height: 300%;
+  }
+
+  .button-container button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  #qr-code-container {
+    display: none;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  #qr-code-container img {
+    width: 200px;
+    height: auto;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
     }
-  </style>
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .social-media-section {
+    background: #0f172a;
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .social-icons {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .social-icons li a {
+    color: #00d4ff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .social-icons li a:hover {
+    color: white;
+  }
+
+  .map-section {
+    text-align: center;
+    margin: 3rem 1rem;
+  }
+
+  .map-section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .map-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+    display: block;
+  }
+
+  /* Tablet */
+  @media (min-width: 768px) {
+    .map-container iframe {
+      height: 400px;
+    }
+  }
+
+  /* Laptop/Desktop */
+  @media (min-width: 1024px) {
+    .map-container iframe {
+      height: 450px;
+    }
+  }
+
+  .map-address {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+  /* Tablet */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    background-color: rgba(15, 23, 42, 0.95);
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+    padding: 1rem 0;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .cover-section {
+    min-height: 50vh;
+    padding: 1rem 0.5rem;
+  }
+
+  .cover-image {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .corner-menu-card {
+    width: 120px;
+    height: 120px;
+    bottom: 10px;
+  }
+
+  #left-menu {
+    left: 10px;
+  }
+
+  #right-menu {
+    right: 10px;
+  }
+
+  .corner-menu-card h3 {
+    font-size: 0.8rem;
+  }
+
+  .menu-card img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .cover-content {
+    padding-bottom: 150px;
+  }
+
+  .logo-image {
+    width: 90px;
+    height: 90px;
+    margin-top: 0.5rem;
+  }
+
+  .cover-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .highlight-n {
+    font-size: 2.5rem;
+  }
+
+  .cover-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cover-section {
+    min-height: 45vh;
+    padding: 1rem 0.5rem;
+    margin-top: 70px;
+  }
+
+  .cover-image {
+    object-fit: cover;
+    object-position: center;
+    width: 100vw; /* Full viewport width */
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cover-content {
+    padding-bottom: 140px;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%;
+  }
+
+  .cover-title {
+    font-size: 1.6rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    word-break: break-word; /* Prevent text overflow */
+  }
+
+  .cover-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+  }
+
+  .corner-menu-card {
+    width: 100px;
+    height: 100px;
+    bottom: 8px;
+  }
+
+  #left-menu {
+    left: 8px;
+  }
+
+  #right-menu {
+    right: 8px;
+  }
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .cover-section {
+    min-height: 50vh;
+    padding: 1rem 0.5rem;
+    margin-top: 70px;
+  }
+
+  .cover-image {
+    object-fit: cover;
+    object-position: center;
+    width: 100vw; /* Use viewport width */
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%); /* Center the image */
+  }
+
+  .cover-content {
+    padding-bottom: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .corner-menu-card {
+    width: 120px;
+    height: 120px;
+    bottom: 10px;
+  }
+
+  #left-menu {
+    left: 10px;
+  }
+
+  #right-menu {
+    right: 10px;
+  }
+}
+
+
+
+@media (max-width: 426px) {
+  .cover-section {
+    min-height: 40vh;
+    margin-top: 65px;
+    padding: 0.5rem 0.25rem;
+  }
+
+  .cover-image {
+    object-fit: cover;
+    object-position: center;
+    width: 100vw;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cover-content {
+    padding-bottom: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .cover-title {
+    font-size: 1.4rem;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .cover-subtitle {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+
+  .corner-menu-card {
+    width: 120px;
+    height: 120px;
+    bottom: 5px;
+  }
+
+  #left-menu {
+    left: 5px;
+  }
+
+  #right-menu {
+    right: 5px;
+  }
+}
+
+@media (max-width: 320px) {
+  .cover-section {
+    min-height: 35vh;
+    padding: 0.5rem 0.25rem;
+  }
+
+  .cover-content {
+    padding-bottom: 50px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .cover-title {
+    font-size: 1.2rem;
+    line-height: 1.1;
+  }
+
+  .cover-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .logo-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .corner-menu-card {
+    width: 70px;
+    height: 70px;
+    bottom: 3px;
+  }
+
+  #left-menu {
+    left: 3px;
+  }
+
+  #right-menu {
+    right: 3px;
+  }
+
+  .corner-menu-card h3 {
+    font-size: 0.5rem;
+  }
+
+  .menu-card img {
+    width: 40px;
+    height: 40px;
+  }
+}
+</style>
+
 </head>
 <body>
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="#" class="logo">Rock N Taco</a>
+      <img src="{{ url_for('static', filename='images/pic_logo.jpeg') }}" class="logo-image" alt="Logo" />
       <div class="menu-toggle" onclick="window.location.href='special.html'">
         <span></span><span></span><span></span>
       </div>
@@ -394,47 +650,59 @@
     </div>
   </nav>
 
-  
-
   <!-- Cover Section -->
   <section class="cover-section" id="home">
-    <img src="{{ url_for('static', filename='images/200w.webp') }}" class="cover-image" />
+    <img id="rotating-banner" class="cover-image" src="{{ banner_image }}">
+
     <div class="cover-overlay"></div>
     <div class="cover-content fade-in">
-      <h1 class="cover-title">Welcome to Rock <span class="highlight-n">N</span> Taco</h1>
-      <p class="cover-subtitle">Rockin’ Tacos. Rollin’ Flavor</p>
-      <img src="{{ url_for('static', filename='images/pic_logo.jpeg') }}" class="logo-image" alt="Logo" />
-
+      <h1 class="cover-title">Welcome to {{ links.display_name }}</h1>
+      <p class="cover-subtitle">{{ links.header_text }}</p>
     </div>
   </section>
 
-<!-- Menu Section -->
-<section class="menu-options fade-in">
-  <!-- Redirect to Flask route /special -->
-  <div class="menu-card" onclick="window.location.href='/special'">
-    <img src="{{ url_for('static', filename='images/menu.jpeg') }}" alt="Menu">
-    <h3>Menu</h3>
+  <section>
+    <!-- Menu Cards in Corners -->
+    <div class="corner-menu-card menu-card" id="left-menu" onclick="window.location.href='https://sites.google.com/view/booster-chaya/menu'">
+      <img src="{{ url_for('static', filename='images/menu.jpeg') }}" alt="Menu">
+      <h3>Menu</h3>
+    </div>
+
+    <div class="corner-menu-card menu-card" id="right-menu" onclick="window.location.href='special.html'">
+      <img src="{{ url_for('static', filename='images/special.jpeg') }}" alt="Special Menu">
+      <h3>Special Menu</h3>
+    </div>
+  </section>
+
+<!-- Responsive Map Section -->
+<div class="map-section">
+  <h2>Find Us Here</h2>
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0550656335393!2d-122.41941528468104!3d37.77492927975947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858064f1e91c4f%3A0x4bfe10efef17319e!2sRock%20N%20Taco!5e0!3m2!1sen!2sus!4v1713450677777!5m2!1sen!2sus"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
-
-  <div class="menu-card">
-    <img src="{{ url_for('static', filename='images/special.jpeg') }}" alt="Special">
-    <h3>Special Menu</h3>
-  </div>
-</section>
-
-
-
-
-  <!-- QR Section -->
-<section>
-  <div class="button-container">
-    <button onclick="toggleQRCode()"><span>Tap here and Scan QR- Code to share</span></button>
-  </div>
-  <div id="qr-code-container" style="display: none; justify-content: center; align-items: center; margin: 1rem auto 2rem;">
-  <div id="qrcode"></div>
+  <p class="map-address">
+    📍 Rock N Taco is located at <strong>123 Main Street, San Francisco, CA 94105</strong>
+  </p>
 </div>
 
+
 </section>
+
+
+<!-- QR Section -->
+  <section>
+    <div class="button-container">
+      <button onclick="toggleQRCode()"><span>Tap here and Scan QR- Code to share</span></button>
+    </div>
+    <div id="qr-code-container">
+      <div id="qrcode"></div>
+    </div>
+  </section>
 
 
   <!-- Social Media Section -->
@@ -442,49 +710,44 @@
     <h2>Contact Us</h2>
     <p>Stay updated with our latest offerings and events!</p>
     <ul class="social-icons">
-      <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-      <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-      <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+      <a href="{{ links.facebook }}" target="_blank">Facebook</a>
+      <a href="{{ links.instagram }}" target="_blank">Instagram</a>
+      <a href="{{ links.whatsapp }}" target="_blank">WhatsApp</a>
+
     </ul>
   </section>
+
+  
 
   <!-- Scripts -->
   <script>
     let qrGenerated = false;
+    function toggleQRCode() {
+      const qrContainer = document.getElementById("qr-code-container");
+      const qrDiv = document.getElementById("qrcode");
 
-  function toggleQRCode() {
-    const qrContainer = document.getElementById("qr-code-container");
-    const qrDiv = document.getElementById("qrcode");
+      if (qrContainer.style.display === "none" || qrContainer.style.display === "") {
+        qrContainer.style.display = "flex";
+        qrContainer.style.justifyContent = "center";
+        qrContainer.style.alignItems = "center";
 
-    if (qrContainer.style.display === "none") {
-      qrContainer.style.display = "flex";
-      qrContainer.style.justifyContent = "center";
-      qrContainer.style.alignItems = "center";
-
-      if (!qrGenerated) {
-        const currentUrl = window.location.href;
-        new QRCode(qrDiv, {
-          text: currentUrl,
-          width: 200,
-          height: 200,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
-        qrGenerated = true;
+        if (!qrGenerated) {
+          const currentUrl = window.location.href;
+          new QRCode(qrDiv, {
+            text: currentUrl,
+            width: 200,
+            height: 200,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+          });
+          qrGenerated = true;
+        }
+      } else {
+        qrContainer.style.display = "none";
       }
-
-    } else {
-      qrContainer.style.display = "none";
-    }
-  }
-
-    function toggleMenu(button) {
-      button.classList.toggle("open");
-      document.getElementById("nav-menu").classList.toggle("active");
     }
 
-    // Scroll reveal
     const fadeElements = document.querySelectorAll(".fade-in");
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -495,6 +758,24 @@
     }, { threshold: 0.1 });
 
     fadeElements.forEach(el => observer.observe(el));
+
+    function checkBannerUpdate() {
+    const currentSrc = document.getElementById("rotating-banner").src;
+    fetch(window.location.pathname + "/current_banner")
+      .then(response => response.json())
+      .then(data => {
+        const newBanner = window.location.origin + "/" + data.banner_image;
+        if (currentSrc !== newBanner) {
+          document.getElementById("rotating-banner").src = newBanner;
+        }
+      });
+  }
+
+  // Check every 60 seconds (you can reduce this to 10–15 seconds if needed)
+  setInterval(checkBannerUpdate, 60000);
+
+    
+
   </script>
 </body>
 </html>

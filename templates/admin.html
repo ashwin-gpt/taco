@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - {{ shop }}</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .admin-container {
+      background: white;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #1e293b;
+    }
+
+    form label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    form input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #cbd5e1;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    form input:focus {
+      border-color: #3b82f6;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      background-color: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1e293b;
+    }
+
+    .logout-link {
+      display: block;
+      text-align: right;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .logout-link a {
+      text-decoration: none;
+      color: #ef4444;
+      font-weight: bold;
+    }
+
+    .logout-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .admin-container {
+        padding: 1.5rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-container">
+    <h2>Edit Social Links for {{ shop }}</h2>
+    <div class="logout-link">
+      <a href="{{ url_for('logout', shop_name=shop) }}">Logout</a>
+    </div>
+    <form method="POST">
+      <label for="facebook">Facebook:</label>
+      <input type="url" name="facebook" id="facebook" value="{{ links.facebook }}" placeholder="https://facebook.com/yourpage">
+
+      <label for="instagram">Instagram:</label>
+      <input type="url" name="instagram" id="instagram" value="{{ links.instagram }}" placeholder="https://instagram.com/yourpage">
+
+      <label for="whatsapp">WhatsApp:</label>
+      <input type="url" name="whatsapp" id="whatsapp" value="{{ links.whatsapp }}" placeholder="https://wa.me/your-number">
+
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+</body>
+</html>
